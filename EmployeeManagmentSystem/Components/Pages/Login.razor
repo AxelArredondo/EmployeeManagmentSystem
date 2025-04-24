@@ -1,0 +1,53 @@
+@page "/login"
+@inject NavigationManager Navigation
+
+<h2 class="mb-4">Login</h2>
+
+<div class="text-center">
+    <h3>Cool Company Name</h3>
+
+    <EditForm Model="@loginUser" OnValidSubmit="HandleLogin">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="mb-3">
+            <InputText @bind-Value="loginUser.Username" class="form-control text-center" placeholder="Username" />
+        </div>
+        <div class="mb-3">
+            <InputText @bind-Value="loginUser.Password" type="password" class="form-control text-center" placeholder="Password" />
+        </div>
+        <button class="btn btn-primary px-4">Login</button>
+    </EditForm>
+
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <p class="text-danger mt-3">@errorMessage</p>
+    }
+</div>
+
+@code {
+    private LoginUser loginUser = new();
+    private string? errorMessage;
+
+    private void HandleLogin()
+    {
+        //need to replace with actual login logic if we want
+        if (loginUser.Username == "admin" && loginUser.Password == "password")
+        {
+            Navigation.NavigateTo("/employees");
+        }
+        else
+        {
+            errorMessage = "Invalid username or password.";
+        }
+    }
+
+    public class LoginUser
+    {
+        [Required]
+        public string Username { get; set; } = "";
+
+        [Required]
+        public string Password { get; set; } = "";
+    }
+}
