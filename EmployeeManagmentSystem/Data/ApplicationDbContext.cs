@@ -1,5 +1,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+
 using EmployeeManagmentSystem.Models;
 
 namespace EmployeeManagmentSystem.Data
