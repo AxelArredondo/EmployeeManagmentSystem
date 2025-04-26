@@ -26,7 +26,7 @@ namespace EmployeeManagmentSystem
 #endif
 
             //MariaDB connection setup
-            var connectionString = "server=localhost;database=employee_db;user=root;password=yourpassword;";
+            var connectionString = "server=localhost;database=employee_db;user=root;password=password;";
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
