@@ -1,0 +1,57 @@
+@page "/add-employee"
+@inject NavigationManager Navigation
+@inject EmployeeManagmentSystem.Data.ApplicationDbContext Db
+
+<h3>Add New Employee</h3>
+
+<EditForm Model="employee" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div>
+        <label>Name:</label><br />
+        <InputText @bind-Value="employee.Name" class="form-control" />
+    </div>
+
+    <div>
+        <label>Department:</label><br />
+        <InputText @bind-Value="employee.Department" class="form-control" />
+    </div>
+
+    <div>
+        <label>Date Hired:</label><br />
+        <InputDate @bind-Value="employee.DateHired" class="form-control" />
+    </div>
+
+    <div>
+        <label>Hourly Wage:</label><br />
+        <InputNumber @bind-Value="employee.HourlyWage" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Add Employee</button>
+</EditForm>
+
+@if (successMessage != null)
+{
+    <p class="text-success mt-2">@successMessage</p>
+}
+
+@code {
+    private EmployeeManagmentSystem.Models.Employee employee = new();
+    private string? successMessage;
+
+    private async Task HandleValidSubmit()
+    {
+        try
+        {
+            Db.Employees.Add(employee);
+            await Db.SaveChangesAsync();
+            successMessage = "Employee added successfully!";
+            employee = new();//resetting
+        }
+        catch (Exception ex)
+        {
+            successMessage = $"Error: {ex.Message}";
+        }
+    }
+}
